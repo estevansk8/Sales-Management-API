@@ -1,8 +1,10 @@
 package com.api.sales_management.shared.controller
 
 import com.api.sales_management.shared.dto.ApiResponseDTO
+import com.fasterxml.jackson.databind.exc.MismatchedInputException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
+import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.RestControllerAdvice
@@ -44,5 +46,28 @@ class GlobalExceptionHandler {
         )
     }
 
+    @ExceptionHandler(HttpMessageNotReadableException::class)
+    fun handleInvalidJson(ex: HttpMessageNotReadableException): ResponseEntity<ApiResponseDTO<Nothing>> {
+        val rootCause = ex.mostSpecificCause
+
+        print(rootCause.toString())
+        val message = if (rootCause is MismatchedInputException) {
+            val path = rootCause.path
+            if (path.isNotEmpty()) {
+                "Invalid or missing field: ${path.joinToString(".") { it.fieldName ?: "unknown" }}"
+            } else {
+                "Invalid or missing field in request body"
+            }
+        } else {
+            rootCause?.message ?: "Failed to process request."
+        }
+
+        val response = ApiResponseDTO(
+            success = false,
+            message = message,
+            data = null
+        )
+        return ResponseEntity(response, HttpStatus.BAD_REQUEST)
+    }
 
 }

@@ -3,6 +3,7 @@ package com.api.sales_management.client.controller
 import com.api.sales_management.client.model.ClientDTO
 import com.api.sales_management.client.service.ClientService
 import com.api.sales_management.shared.dto.ApiResponseDTO
+import jakarta.validation.Valid
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
@@ -22,7 +23,7 @@ class ClientController(
 ) {
 
     @PostMapping
-    fun create(@RequestBody client: ClientDTO): ResponseEntity<ApiResponseDTO<ClientDTO>> {
+    fun create(@RequestBody @Valid client: ClientDTO): ResponseEntity<ApiResponseDTO<ClientDTO>> {
         val createdClient = service.create(client)
         return ResponseEntity
             .status(HttpStatus.CREATED)
