@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 @RequestMapping("/clients")
-class ClientController(private val service: ClientService) {
+class ClientController(
+    private val service: ClientService
+) {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
