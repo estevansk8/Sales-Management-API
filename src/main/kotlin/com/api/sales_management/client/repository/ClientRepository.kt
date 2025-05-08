@@ -1,4 +1,6 @@
 package com.api.sales_management.client.repository
 
-interface ClientRepository {
-}
+import com.api.sales_management.client.domain.Client
+import org.springframework.data.jpa.repository.JpaRepository
+
+interface ClientRepository: JpaRepository<Client, Long>
