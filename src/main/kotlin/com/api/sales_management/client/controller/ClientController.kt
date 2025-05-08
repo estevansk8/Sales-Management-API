@@ -2,7 +2,9 @@ package com.api.sales_management.client.controller
 
 import com.api.sales_management.client.model.ClientDTO
 import com.api.sales_management.client.service.ClientService
+import com.api.sales_management.shared.dto.ApiResponseDTO
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.DeleteMapping
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
@@ -20,19 +22,34 @@ class ClientController(
 ) {
 
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
-    fun create(@RequestBody client: ClientDTO): ClientDTO = service.create(client)
+    fun create(@RequestBody client: ClientDTO): ResponseEntity<ApiResponseDTO<ClientDTO>> {
+        val createdClient = service.create(client)
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(ApiResponseDTO(createdClient, true, "ok"))
+    }
 
     @GetMapping
-    fun listAll(): List<ClientDTO> = service.listAll()
+    fun listAll(): ResponseEntity<ApiResponseDTO<List<ClientDTO>>> {
+        val clients = service.listAll()
+        return ResponseEntity.ok(ApiResponseDTO(clients, true, "ok"  ))
+    }
 
     @GetMapping("/{id}")
-    fun getById(@PathVariable id: Long): ClientDTO = service.getById(id)
+    fun getById(@PathVariable id: Long): ResponseEntity<ApiResponseDTO<ClientDTO>> {
+        val client = service.getById(id)
+        return ResponseEntity.ok(ApiResponseDTO(client, true, "ok"))
+    }
 
     @PutMapping("/{id}")
-    fun update(@PathVariable id: Long, @RequestBody client: ClientDTO): ClientDTO = service.update(id, client)
+    fun update(@PathVariable id: Long, @RequestBody client: ClientDTO): ResponseEntity<ApiResponseDTO<ClientDTO>> {
+        val updated = service.update(id, client)
+        return ResponseEntity.ok(ApiResponseDTO(updated, true, "${client.name} updated"))
+    }
 
     @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    fun delete(@PathVariable id: Long) = service.delete(id)
+    fun delete(@PathVariable id: Long): ResponseEntity<ApiResponseDTO<Unit>> {
+        service.delete(id)
+        return ResponseEntity.ok(ApiResponseDTO(null, true, "Client $id deleted"))
+    }
 }
