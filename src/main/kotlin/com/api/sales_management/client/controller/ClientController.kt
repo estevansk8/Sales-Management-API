@@ -50,6 +50,6 @@ class ClientController(
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<ApiResponseDTO<Unit>> {
         service.delete(id)
-        return ResponseEntity.ok(ApiResponseDTO(true, "client id:$id deleted",null ))
+        return ResponseEntity.ok(ApiResponseDTO(true, "client id:$id deleted" ))
     }
 }
