@@ -26,30 +26,30 @@ class ClientController(
         val createdClient = service.create(client)
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(ApiResponseDTO(createdClient, true, "ok"))
+            .body(ApiResponseDTO(true, "created", createdClient))
     }
 
     @GetMapping
     fun listAll(): ResponseEntity<ApiResponseDTO<List<ClientDTO>>> {
         val clients = service.listAll()
-        return ResponseEntity.ok(ApiResponseDTO(clients, true, "ok"  ))
+        return ResponseEntity.ok(ApiResponseDTO(true, "ok", clients  ))
     }
 
     @GetMapping("/{id}")
     fun getById(@PathVariable id: Long): ResponseEntity<ApiResponseDTO<ClientDTO>> {
         val client = service.getById(id)
-        return ResponseEntity.ok(ApiResponseDTO(client, true, "ok"))
+        return ResponseEntity.ok(ApiResponseDTO(true, "ok", client))
     }
 
     @PutMapping("/{id}")
     fun update(@PathVariable id: Long, @RequestBody client: ClientDTO): ResponseEntity<ApiResponseDTO<ClientDTO>> {
         val updated = service.update(id, client)
-        return ResponseEntity.ok(ApiResponseDTO(updated, true, "${client.name} updated"))
+        return ResponseEntity.ok(ApiResponseDTO(true, "${client.name} updated",updated))
     }
 
     @DeleteMapping("/{id}")
     fun delete(@PathVariable id: Long): ResponseEntity<ApiResponseDTO<Unit>> {
         service.delete(id)
-        return ResponseEntity.ok(ApiResponseDTO(null, true, "Client $id deleted"))
+        return ResponseEntity.ok(ApiResponseDTO(true, "client id:$id deleted",null ))
     }
 }
