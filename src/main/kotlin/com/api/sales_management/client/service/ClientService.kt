@@ -10,9 +10,9 @@ class ClientService(private val repository: ClientRepository) {
 
     fun create(client: ClientDTO): ClientDTO {
         val entity = Client(
-            nome = client.nome,
-            telefone = client.telefone,
-            endereco = client.endereco
+            name = client.name,
+            phone = client.phone,
+            address = client.address
         )
         return repository.save(entity).toDTO()
     }
@@ -25,12 +25,12 @@ class ClientService(private val repository: ClientRepository) {
 
     fun update(id: Long, updated: ClientDTO): ClientDTO {
         val entity = repository.findById(id).orElseThrow().copy(
-            nome = updated.nome,
-            telefone = updated.telefone,
-            endereco = updated.endereco
+            name = updated.name,
+            phone = updated.phone,
+            address = updated.address
         )
         return repository.save(entity).toDTO()
     }
 
-    private fun Client.toDTO() = ClientDTO(idCliente, nome, telefone, endereco)
+    private fun Client.toDTO() = ClientDTO(idClient, name, phone, address)
 }

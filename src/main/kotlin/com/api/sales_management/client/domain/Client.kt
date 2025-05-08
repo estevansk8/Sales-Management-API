@@ -8,16 +8,16 @@ import jakarta.persistence.Id
 import jakarta.persistence.Table
 
 @Entity
-@Table(name = "cliente")
+@Table(name = "client")
 data class Client(
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val idCliente: Long = 0,
+    val idClient: Long = 0,
 
     @Column(nullable = false)
-    val nome: String,
+    val name: String,
 
-    val telefone: String?,
+    val phone: String?,
 
-    val endereco: String?
+    val address: String?
 )
 
