@@ -7,6 +7,6 @@ import org.springframework.boot.runApplication
 class SalesManagementApplication
 
 fun main(args: Array<String>) {
-	print("Vai Corinthians!!")
+	print("Vai Curintia!!")
 	runApplication<SalesManagementApplication>(*args)
 }
