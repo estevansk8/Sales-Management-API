@@ -20,7 +20,7 @@ class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(
             ApiResponseDTO(
                 success = false,
-                message = "Validation failed",
+                message = errors.values.toString(),
                 data = errors
             )
         )
