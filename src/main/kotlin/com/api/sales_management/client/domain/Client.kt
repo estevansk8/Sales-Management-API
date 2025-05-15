@@ -16,6 +16,7 @@ data class Client(
     @Column(nullable = false)
     val name: String,
 
+    //TODO: CRIAR VALUE OBJECT E ADICIONAR EMBEDEED
     val phone: String?,
 
     val address: String?
