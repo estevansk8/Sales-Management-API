@@ -7,7 +7,7 @@ data class UserUpdateRequestDTO(
     @field:Size(max = 100, message = "Name must be up to 100 characters")
     val name: String?,
 
-    val email: EmailVO?,
+    val email: String?,
 
     @field:Size(min = 6, message = "Password must be at least 6 characters long")
     val password: String?,

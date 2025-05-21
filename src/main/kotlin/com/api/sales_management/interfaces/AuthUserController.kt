@@ -25,7 +25,9 @@ class AuthUserController(
 
     @PostMapping
     fun createUser(@Valid @RequestBody userCreateDTO: UserCreateRequestDTO): ResponseEntity<ApiResponseDTO<UserResponseDTO>> {
+        print(userCreateDTO)
         val createdUser = authUserService.createUser(userCreateDTO)
+        print("CreatedUser: $createdUser")
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(ApiResponseDTO(true, "User created successfully", createdUser))

@@ -19,9 +19,10 @@ class AuthUserService(
 
     @Transactional
     fun createUser(requestDTO: UserCreateRequestDTO): UserResponseDTO {
-        if (userRepository.existsByEmail(requestDTO.email)) {
-            throw IllegalArgumentException("Email already registered: ${requestDTO.email.value}")
-        }
+        //TODO: MELHORAR TRATATIVA DE ERRO
+//        if (userRepository.existsByEmail(requestDTO.email)) {
+//            throw IllegalArgumentException("Email already registered: ${requestDTO.email}")
+//        }
         val hashedPassword = passwordEncoder.encode(requestDTO.password)
         val user = userMapper.toEntity(requestDTO).copy(password = hashedPassword)
         val savedUser = userRepository.save(user)
@@ -46,8 +47,8 @@ class AuthUserService(
             .orElseThrow { EntityNotFoundException("User not found with ID: $id") }
 
         requestDTO.email?.let { newEmail ->
-            if (newEmail.value != existingUser.email.value && userRepository.existsByEmail(newEmail)) {
-                throw IllegalArgumentException("New email already registered: ${newEmail.value}")
+            if (newEmail != existingUser.email.value && userRepository.existsByEmail(newEmail)) {
+                throw IllegalArgumentException("New email already registered: $newEmail")
             }
         }
 
