@@ -5,6 +5,7 @@ import com.api.sales_management.application.dto.request.user.UserUpdateRequestDT
 import com.api.sales_management.application.dto.response.user.UserResponseDTO
 import com.api.sales_management.application.mapper.AuthUserMapper
 import com.api.sales_management.domain.repository.AuthUserRepository
+import com.api.sales_management.infrastructure.security.config.HashEncoder
 import jakarta.persistence.EntityNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.transaction.annotation.Transactional
@@ -14,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 class AuthUserService(
     private val userRepository: AuthUserRepository,
     private val userMapper: AuthUserMapper,
-    private val passwordEncoder: PasswordEncoder
+    private val passwordEncoder: HashEncoder
 ) {
 
     @Transactional

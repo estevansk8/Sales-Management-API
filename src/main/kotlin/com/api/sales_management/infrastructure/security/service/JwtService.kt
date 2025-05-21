@@ -1,4 +1,4 @@
-package com.api.sales_management.infrastructure.security.config
+package com.api.sales_management.infrastructure.security.service
 
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
