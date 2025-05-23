@@ -21,9 +21,9 @@ class AuthUserService(
     @Transactional
     fun createUser(requestDTO: UserCreateRequestDTO): UserResponseDTO {
         //TODO: MELHORAR TRATATIVA DE ERRO
-//        if (userRepository.existsByEmail(requestDTO.email)) {
-//            throw IllegalArgumentException("Email already registered: ${requestDTO.email}")
-//        }
+        if (userRepository.existsByEmail(requestDTO.email)) {
+            throw IllegalArgumentException("Email already registered: ${requestDTO.email}")
+        }
         val hashedPassword = passwordEncoder.encode(requestDTO.password)
         val user = userMapper.toEntity(requestDTO).copy(password = hashedPassword)
         val savedUser = userRepository.save(user)
