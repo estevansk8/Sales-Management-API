@@ -48,7 +48,7 @@ class AuthUserService(
             .orElseThrow { EntityNotFoundException("User not found with ID: $id") }
 
         requestDTO.email?.let { newEmail ->
-            if (newEmail != existingUser.email.value && userRepository.existsByEmail(newEmail)) {
+            if (newEmail != existingUser.email && userRepository.existsByEmail(newEmail)) {
                 throw IllegalArgumentException("New email already registered: $newEmail")
             }
         }

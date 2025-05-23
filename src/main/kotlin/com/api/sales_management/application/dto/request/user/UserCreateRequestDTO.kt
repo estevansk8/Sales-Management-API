@@ -1,6 +1,5 @@
 package com.api.sales_management.application.dto.request.user
 
-import com.api.sales_management.domain.model.valueobject.EmailVO
 import jakarta.validation.constraints.NotBlank
 import jakarta.validation.constraints.Size
 

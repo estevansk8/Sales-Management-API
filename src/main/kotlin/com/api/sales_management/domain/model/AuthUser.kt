@@ -1,6 +1,5 @@
 package com.api.sales_management.domain.model
 
-import com.api.sales_management.domain.model.valueobject.EmailVO
 import jakarta.persistence.AttributeOverride
 import jakarta.persistence.Column
 import jakarta.persistence.Embedded
@@ -23,9 +22,8 @@ data class AuthUser(
     @Column(name = "name", length = 100)
     var name: String,
 
-    @Embedded
-    @AttributeOverride(name = "value", column = Column(name = "email", unique = true, length = 100))
-    var email: EmailVO,
+    @Column(name = "email", length = 100)
+    var email: String,
 
     @Column(name = "password", length = 100)
     var password: String,
