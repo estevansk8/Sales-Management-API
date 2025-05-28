@@ -28,13 +28,11 @@ data class Client(
     @Column(name = "name", length = 100, nullable = false)
     var name: String,
 
-    @Embedded
-    @AttributeOverride(name = "value", column = Column(name = "phone", length = 20))
-    var phone: PhoneVO?,
+    @Column(name = "phone", length = 20, nullable = false)
+    var phone: String?,
 
-    @Embedded
-    @AttributeOverride(name = "value", column = Column(name = "address", length = 200))
-    var address: AddressVO?,
+    @Column(name = "address", length = 200, nullable = false)
+    var address: String?,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
@@ -45,7 +43,7 @@ data class Client(
     val createdAt: LocalDateTime = LocalDateTime.now()
 ) {
 
-     fun updateContactInfo(newPhone: PhoneVO?, newAddress: AddressVO?) {
+     fun updateContactInfo(newPhone: String?, newAddress: String?) {
          this.phone = newPhone
          this.address = newAddress
      }

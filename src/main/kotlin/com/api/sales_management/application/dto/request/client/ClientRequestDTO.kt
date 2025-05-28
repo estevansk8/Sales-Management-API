@@ -13,10 +13,10 @@ data class ClientRequestDTO(
     val name: String,
 
     @field:Valid
-    val phone: PhoneVO?,
+    val phone: String?,
 
     @field:Valid
-    val address: AddressVO?,
+    val address: String?,
 
     @field:NotNull(message = "User ID is required")
     val userId: Long

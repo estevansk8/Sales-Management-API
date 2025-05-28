@@ -22,8 +22,8 @@ class ClientMapper {
         return ClientResponseDTO(
             id = entity.id,
             name = entity.name,
-            phone = entity.phone?.value,
-            address = entity.address?.value,
+            phone = entity.phone,
+            address = entity.address,
             userId = entity.user.id,
             userName = entity.user.name,
             createdAt = entity.createdAt
