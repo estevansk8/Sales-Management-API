@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PutMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.security.Principal
 
 @RestController
 @RequestMapping("/api/v1/clients")
@@ -23,8 +24,20 @@ class ClientController(
 ) {
 
     @PostMapping
-    fun createClient(@Valid @RequestBody clientRequestDTO: ClientRequestDTO): ResponseEntity<ApiResponseDTO<ClientResponseDTO>> {
-        val createdClient = clientService.createClient(clientRequestDTO)
+    fun createClient(
+        @Valid @RequestBody clientRequestDTO: ClientRequestDTO,
+        principal: Principal
+    ): ResponseEntity<ApiResponseDTO<ClientResponseDTO>> {
+        val authenticatedUserId: Long
+        try {
+            authenticatedUserId = principal.name.toLong()
+        } catch (e: NumberFormatException) {
+            return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(ApiResponseDTO(false, "Invalid user identifier in token.", null))
+        }
+
+        val createdClient = clientService.createClient(clientRequestDTO, authenticatedUserId)
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(ApiResponseDTO(true, "Client created successfully", createdClient))

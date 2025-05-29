@@ -20,7 +20,6 @@ class AuthUserService(
 
     @Transactional
     fun createUser(requestDTO: UserCreateRequestDTO): UserResponseDTO {
-        //TODO: MELHORAR TRATATIVA DE ERRO
         if (userRepository.existsByEmail(requestDTO.email)) {
             throw IllegalArgumentException("Email already registered: ${requestDTO.email}")
         }

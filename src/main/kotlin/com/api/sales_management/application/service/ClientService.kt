@@ -17,9 +17,9 @@ class ClientService(
 ) {
 
     @Transactional
-    fun createClient(requestDTO: ClientRequestDTO): ClientResponseDTO {
-        val user = authUserRepository.findById(requestDTO.userId)
-            .orElseThrow { EntityNotFoundException("User not found with ID: ${requestDTO.userId} to associate with client") }
+    fun createClient(requestDTO: ClientRequestDTO, authenticatedUserId: Long): ClientResponseDTO {
+        val user = authUserRepository.findById(authenticatedUserId) // Usa o ID do usuário autenticado
+            .orElseThrow { EntityNotFoundException("User not found with ID: $authenticatedUserId to associate with client") }
 
         val clientEntity = clientMapper.toEntity(requestDTO, user)
         val savedClient = clientRepository.save(clientEntity)
@@ -43,16 +43,11 @@ class ClientService(
         val existingClient = clientRepository.findById(id)
             .orElseThrow { EntityNotFoundException("Client not found with ID: $id for update") }
 
-        // Se o userId no DTO for diferente do userId existente no cliente, busca o novo usuário.
-        val user = if (existingClient.user.id != requestDTO.userId) {
-            authUserRepository.findById(requestDTO.userId)
-                .orElseThrow { EntityNotFoundException("User not found with ID: ${requestDTO.userId} to associate with client") }
-        } else {
-            // Mantém o usuário existente
-            existingClient.user
-        }
+        //               TODO: Endpoint dedicado ao update
+        // A lógica para buscar/atualizar o 'user' com base no 'requestDTO.userId' foi removida.
+        // O usuário associado ao cliente não será alterado por este método.
 
-        clientMapper.updateEntityFromDTO(existingClient, requestDTO, user)
+        clientMapper.updateEntityFromDTO(existingClient, requestDTO) // Não passa mais 'user'
         val updatedClient = clientRepository.save(existingClient)
         return clientMapper.toResponseDTO(updatedClient)
     }

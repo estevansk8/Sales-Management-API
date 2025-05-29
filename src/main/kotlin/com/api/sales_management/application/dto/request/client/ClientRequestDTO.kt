@@ -18,6 +18,4 @@ data class ClientRequestDTO(
     @field:Valid
     val address: String?,
 
-    @field:NotNull(message = "User ID is required")
-    val userId: Long
 )

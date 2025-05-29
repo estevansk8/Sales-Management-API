@@ -30,10 +30,9 @@ class ClientMapper {
         )
     }
 
-    fun updateEntityFromDTO(entity: Client, dto: ClientRequestDTO, user: AuthUser?) {
+    fun updateEntityFromDTO(entity: Client, dto: ClientRequestDTO) {
         entity.name = dto.name
         entity.phone = dto.phone
         entity.address = dto.address
-        user?.let { entity.user = it }
     }
 }
