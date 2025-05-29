@@ -39,7 +39,7 @@ class ProductService(
     }
 
     @Transactional(readOnly = true)
-    fun getAllProductsByAuthenticatedUser(authenticatedUserId: Long): List<ProductResponseDTO> {
+    fun getAllProductsBydUser(authenticatedUserId: Long): List<ProductResponseDTO> {
         val products = productRepository.findByUser_Id(authenticatedUserId)
         return products.map { productMapper.toResponseDTO(it) }
     }
