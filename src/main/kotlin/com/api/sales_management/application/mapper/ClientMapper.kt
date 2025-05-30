@@ -24,9 +24,6 @@ class ClientMapper {
             name = entity.name,
             phone = entity.phone,
             address = entity.address,
-            userId = entity.user.id,
-            userName = entity.user.name,
-            createdAt = entity.createdAt
         )
     }
 

@@ -7,7 +7,4 @@ data class ClientResponseDTO(
     val name: String,
     val phone: String?,
     val address: String?,
-    val userId: Long,
-    val userName: String,
-    val createdAt: LocalDateTime
 )
