@@ -34,8 +34,9 @@ class ClientService(
     }
 
     @Transactional(readOnly = true)
-    fun getAllClients(): List<ClientResponseDTO> {
-        return clientRepository.findAll().map { clientMapper.toResponseDTO(it) }
+    fun getAllClientsByUser(authenticatedUserId: Long): List<ClientResponseDTO> {
+        val clients = clientRepository.findByUser_Id(authenticatedUserId)
+        return clients.map { clientMapper.toResponseDTO(it)}
     }
 
     @Transactional

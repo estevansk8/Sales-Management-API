@@ -50,8 +50,11 @@ class ClientController(
     }
 
     @GetMapping
-    fun getAllClients(): ResponseEntity<ApiResponseDTO<List<ClientResponseDTO>>> {
-        val clients = clientService.getAllClients()
+    fun getAllClientsByUser(
+        principal: Principal
+    ): ResponseEntity<ApiResponseDTO<List<ClientResponseDTO>>> {
+        val authenticatedUserId = principal.name.toLong()
+        val clients = clientService.getAllClientsByUser(authenticatedUserId)
         return ResponseEntity.ok(ApiResponseDTO(true, "Clients retrieved successfully", clients))
     }
 
