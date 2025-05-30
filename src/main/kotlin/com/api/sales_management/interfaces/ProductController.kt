@@ -31,10 +31,10 @@ class ProductController(
 
     @GetMapping("/{id}")
     fun getProductById(
-        @PathVariable id: Long
-        // principal: Principal // Descomente se precisar do ID do usuário para lógica de acesso
+        @PathVariable id: Long,
+         principal: Principal
     ): ResponseEntity<ApiResponseDTO<ProductResponseDTO>> {
-        // Se getProductById no service for restrito ao dono, você precisará do authenticatedUserId:
+        // TODO: Logica para pegar somente o daquele usuário
         // val authenticatedUserId = principal.name.toLong()
         // val product = productService.getProductById(id, authenticatedUserId)
         val product = productService.getProductById(id) // Versão atual permite qualquer user ver
