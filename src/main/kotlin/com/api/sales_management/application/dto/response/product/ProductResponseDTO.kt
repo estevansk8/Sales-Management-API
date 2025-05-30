@@ -8,7 +8,4 @@ data class ProductResponseDTO(
     val name: String,
     val price: BigDecimal,
     val stock: Int,
-    val userId: Long,    // ID do usuário que cadastrou
-    val userName: String, // Nome do usuário que cadastrou
-    val createdAt: LocalDateTime
 )

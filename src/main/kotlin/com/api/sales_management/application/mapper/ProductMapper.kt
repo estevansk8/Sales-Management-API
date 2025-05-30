@@ -24,9 +24,6 @@ class ProductMapper {
             name = entity.name,
             price = entity.price,
             stock = entity.stock,
-            userId = entity.user.id,
-            userName = entity.user.name,
-            createdAt = entity.createdAt
         )
     }
 
