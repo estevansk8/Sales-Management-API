@@ -40,6 +40,7 @@ class SaleService(
         // A abordagem com CascadeType.ALL e mappedBy deveria cuidar disso,
         // mas a chave composta SaleItemId pode precisar de atenção especial.
 
+
         // A maneira mais segura é limpar os itens criados pelo mapper (que não tinham o saleId correto)
         // e recriá-los agora que 'savedSale' tem um ID.
         savedSale.items.clear() // Remove os itens temporários que foram cacheados
@@ -54,9 +55,10 @@ class SaleService(
                 unitPrice = itemDto.unitPrice // Usando o preço do DTO
             )
         }
+
         // Adiciona os itens finais à coleção da venda.
-        // Como SaleItem não está em CascadePersist a partir daqui (já que estamos gerenciando manualmente),
-        // precisamos salvar cada SaleItem individualmente se CascadeType.ALL não for suficiente
+        // Como SaleItem não está em CascadePersist a partir daqui (já que esta gerenciando manualmente),
+        // precisa salvar cada SaleItem individualmente se CascadeType.ALL não for suficiente
         // devido à forma como a chave composta e o ID são definidos.
         // Ou, se a cascata funcionar corretamente com a atualização do ID da venda nos itens:
         savedSale.items.addAll(finalSaleItems)
@@ -94,13 +96,13 @@ class SaleService(
         val sale = saleRepository.findByIdAndUser_Id(saleId, authenticatedUserId) // Busca simples primeiro
             ?: throw  EntityNotFoundException("Sale not found with ID: $saleId for update, or access denied.")
 
-        // TODO: Adicionar lógica de validação de transição de status, se necessário
+        // TODO: Adicionar lógica de validação de transição de status
         // Ex: não pode cancelar uma venda já entregue, etc.
         sale.status = newStatus
         if (newStatus == SaleStatus.PAID) {
             // Lógica adicional, ex: registrar pagamento
         } else if (newStatus == SaleStatus.CANCELLED) {
-            // TODO: Lógica de estorno de estoque, se aplicável
+            // TODO: Lógica de estorno de estoque
             // sale.items.forEach { item ->
             //     val product = productRepository.findById(item.product.id).get()
             //     product.stock += item.quantity
