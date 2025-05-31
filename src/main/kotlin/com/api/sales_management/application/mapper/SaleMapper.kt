@@ -23,7 +23,7 @@ class SaleMapper(
     // --- Mapeamento de Item de Venda ---
     fun saleItemRequestToEntity(
         dto: SaleItemRequestDTO,
-        sale: Sale // A venda à qual este item pertencerá
+        sale: Sale
     ): SaleItem {
         val product = productRepository.findById(dto.productId)
             .orElseThrow { EntityNotFoundException("Product not found with ID: ${dto.productId}") }
