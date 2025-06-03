@@ -1,16 +1,11 @@
 package com.api.sales_management.infrastructure.security.service
 
-import com.api.sales_management.domain.model.AuthUser
 import com.api.sales_management.domain.repository.AuthUserRepository
-import com.api.sales_management.infrastructure.security.auth.TokenResponse
+import com.api.sales_management.infrastructure.security.auth.LoginResponse
 import com.api.sales_management.infrastructure.security.config.HashEncoder
-import jakarta.transaction.Transactional
-import org.springframework.http.HttpStatusCode
 import org.springframework.stereotype.Service
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.web.server.ResponseStatusException
 import java.security.MessageDigest
-import java.time.Instant
 import java.util.Base64
 
 @Service
@@ -19,7 +14,7 @@ class AuthService(
     private val userRepository: AuthUserRepository,
     private val hashEncoder: HashEncoder,
 ) {
-    fun login(email: String, password: String): TokenResponse {
+    fun login(email: String, password: String): LoginResponse {
         val user = userRepository.findByEmail(email)
             ?: throw BadCredentialsException("Invalid credentials.")
 
@@ -32,7 +27,8 @@ class AuthService(
 
 //        storeRefreshToken(user, newRefreshToken)
 
-        return TokenResponse(
+        return LoginResponse(
+            username = user.name,
             accessToken = newAccessToken,
             refreshToken = newRefreshToken
         )

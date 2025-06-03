@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 data class UserResponseDTO(
     val id: Long,
     val name: String,
-    val email: String, // Retornar o valor string do EmailVO
+    val email: String,  
     val profilePicture: String?,
     val createdAt: LocalDateTime
 )
