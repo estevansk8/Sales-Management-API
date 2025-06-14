@@ -50,6 +50,14 @@ class ProductController(
         return ResponseEntity.ok(ApiResponseDTO(true, "Products retrieved successfully for the user", products))
     }
 
+    @GetMapping("/search")
+    fun searchProducts(
+        @RequestParam(name = "name") query: String
+    ): ResponseEntity<ApiResponseDTO<List<ProductResponseDTO>>> {
+        val products = productService.searchProductsByName(query)
+        return ResponseEntity.ok(ApiResponseDTO(true, "Products retrieved successfully by name", products))
+    }
+
     @PutMapping("/{id}")
     fun updateProduct(
         @PathVariable id: Long,
