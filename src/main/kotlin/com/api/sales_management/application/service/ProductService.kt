@@ -45,11 +45,11 @@ class ProductService(
     }
 
     @Transactional(readOnly = true)
-    fun searchProductsByName(name: String): List<ProductResponseDTO> {
+    fun searchProductsByName(name: String, authenticatedUserId: Long): List<ProductResponseDTO> {
         if (name.isBlank()) {
             return emptyList()
         }
-        val products = productRepository.findByNameContainingIgnoreCase(name)
+        val products = productRepository.findByNameContainingIgnoreCaseAndUserId(name, authenticatedUserId)
         return products.map { productMapper.toResponseDTO(it) }
     }
 
