@@ -52,9 +52,11 @@ class ProductController(
 
     @GetMapping("/search")
     fun searchProducts(
-        @RequestParam(name = "name") query: String
+        @RequestParam(name = "name") query: String,
+        principal: Principal
     ): ResponseEntity<ApiResponseDTO<List<ProductResponseDTO>>> {
-        val products = productService.searchProductsByName(query)
+        val authenticatedUserId = principal.name.toLong()
+        val products = productService.searchProductsByName(query, authenticatedUserId)
         return ResponseEntity.ok(ApiResponseDTO(true, "Products retrieved successfully by name", products))
     }
 
