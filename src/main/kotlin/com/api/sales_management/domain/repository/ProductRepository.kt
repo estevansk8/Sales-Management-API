@@ -13,7 +13,7 @@ interface ProductRepository : JpaRepository<Product, Long> {
 
     fun existsByIdAndUser_Id(id: Long, userId: Long): Boolean
 
-    fun findByNameContainingIgnoreCase(name: String): List<Product>
+    fun findByNameContainingIgnoreCaseAndUserId(name: String, userId: Long): List<Product>
 
     @Query("SELECT p FROM Product p JOIN FETCH p.user WHERE p.id = :id")
     fun findByIdWithUser(id: Long): Product?
